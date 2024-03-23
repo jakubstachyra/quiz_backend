@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
-import { Quiz } from 'src/quizzes/quizzes.entity';
+import { Quiz } from 'src/quizzes/quiz.entity';
 import { Users } from 'src/users/user.entity';
 import { UserAnswer } from 'src/user-answers/user-answer.entity';
 
@@ -8,8 +8,8 @@ export class QuizAttempt {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Quiz, quiz => quiz.quizAttempts)
-  quiz: Quiz;
+  //@ManyToOne(() => Quiz, quiz => quiz.quizAttempts)
+  //quiz: Quiz;
 
   //@ManyToOne(() => User, user => user.quizAttempts)
   //user: User;

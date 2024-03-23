@@ -11,18 +11,12 @@ export class Quiz {
   @Column()
   title: string;
 
- // @ManyToOne(() => User, user => user.quizzes)
-  //author: User;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
+  @ManyToOne(() => Users, user => user.quizzes)
+  author: Users;
 
   @OneToMany(() => Question, question => question.quiz)
   questions: Question[];
 
-  @OneToMany(() => QuizAttempt, quizAttempt => quizAttempt.quiz)
-  quizAttempts: QuizAttempt[];
+  //@OneToMany(() => QuizAttempt, quizAttempt => quizAttempt.quiz)
+  //quizAttempts: QuizAttempt[];
 }

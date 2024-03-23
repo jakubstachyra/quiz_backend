@@ -13,12 +13,6 @@ export class Option {
   @Column()
   text: string;
 
-  @Column({ nullable: true })
+  @Column()
   is_correct: boolean;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
 }
