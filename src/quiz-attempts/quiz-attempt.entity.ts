@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
-import { Quiz } from 'src/quizes/quiz.entity';
-import { User } from 'src/users/user.entity';
+import { Quiz } from 'src/quizzes/quizzes.entity';
+import { Users } from 'src/users/user.entity';
 import { UserAnswer } from 'src/user-answers/user-answer.entity';
 
 @Entity()
@@ -11,8 +11,8 @@ export class QuizAttempt {
   @ManyToOne(() => Quiz, quiz => quiz.quizAttempts)
   quiz: Quiz;
 
-  @ManyToOne(() => User, user => user.quizAttempts)
-  user: User;
+  //@ManyToOne(() => User, user => user.quizAttempts)
+  //user: User;
 
   @Column()
   score: number;
