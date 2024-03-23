@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CreateUserInput } from "src/graphql/utils/createUserInput";
+import { CreateUserInput } from "src/graphql/utils/createUser.input";
 import { Users } from "./user.entity";
 import { DataSource, Repository} from "typeorm";
 
