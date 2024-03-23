@@ -35,8 +35,7 @@ async createUser(createUserData: CreateUserInput): Promise<Users> {
         await queryRunner.rollbackTransaction();
         console.error("Transaction failed:", error);
         throw new InternalServerErrorException("Failed to create user");
-    }
-    finally{
+    }finally{
         await queryRunner.release();
     }
 }
