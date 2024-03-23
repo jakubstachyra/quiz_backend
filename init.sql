@@ -3,9 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    role VARCHAR(20) CHECK (role IN ('teacher', 'student')),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC')
+    role VARCHAR(20) CHECK (role IN ('teacher', 'student'))
 );
 
 -- Creating table quizzes
@@ -68,36 +66,36 @@ CREATE TABLE IF NOT EXISTS user_answers (
     FOREIGN KEY (option_id) REFERENCES options (id)
 );
 -- Inserting sample users
-INSERT INTO users (name, email, role, created_at, updated_at) VALUES
-('Alice Teacher', 'alice@example.com', 'teacher', NOW(), NOW()),
-('Bob Student', 'bob@example.com', 'student', NOW(), NOW());
+--INSERT INTO users (name, email, role, created_at, updated_at) VALUES
+--('Alice Teacher', 'alice@example.com', 'teacher', NOW(), NOW()),
+--('Bob Student', 'bob@example.com', 'student', NOW(), NOW());
 
 -- Inserting sample quizzes
-INSERT INTO quizzes (title, author_id, created_at, updated_at) VALUES
-('Capital Cities Quiz', 1, NOW(), NOW()),
-('Programming Languages Quiz', 1, NOW(), NOW());
+--INSERT INTO quizzes (title, author_id, created_at, updated_at) VALUES
+--('Capital Cities Quiz', 1, NOW(), NOW()),
+--('Programming Languages Quiz', 1, NOW(), NOW());
 
 -- Inserting sample questions
-INSERT INTO questions (quiz_id, text, created_at, updated_at) VALUES
-(1, 'What is the capital of France?', NOW(), NOW()),
-(1, 'What is the capital of Germany?', NOW(), NOW()),
-(2, 'Which language runs in a web browser?', NOW(), NOW()),
-(2, 'What is the main language used for Android app development?', NOW(), NOW());
+--INSERT INTO questions (quiz_id, text, created_at, updated_at) VALUES
+--(1, 'What is the capital of France?', NOW(), NOW()),
+--(1, 'What is the capital of Germany?', NOW(), NOW()),
+--(2, 'Which language runs in a web browser?', NOW(), NOW()),
+--(2, 'What is the main language used for Android app development?', NOW(), NOW());
 
 -- Inserting sample options
-INSERT INTO options (question_id, text, is_correct, created_at, updated_at) VALUES
-(1, 'Paris', TRUE, NOW(), NOW()),
-(1, 'London', FALSE, NOW(), NOW()),
-(1, 'Rome', FALSE, NOW(), NOW()),
-(2, 'Berlin', TRUE, NOW(), NOW()),
-(2, 'Madrid', FALSE, NOW(), NOW()),
-(2, 'Lisbon', FALSE, NOW(), NOW()),
-(3, 'JavaScript', TRUE, NOW(), NOW()),
-(3, 'C++', FALSE, NOW(), NOW()),
-(3, 'Python', FALSE, NOW(), NOW()),
-(4, 'Java', TRUE, NOW(), NOW()),
-(4, 'C#', FALSE, NOW(), NOW()),
-(4, 'Swift', FALSE, NOW(), NOW());
+--INSERT INTO options (question_id, text, is_correct, created_at, updated_at) VALUES
+--(1, 'Paris', TRUE, NOW(), NOW()),
+--(1, 'London', FALSE, NOW(), NOW()),
+--(1, 'Rome', FALSE, NOW(), NOW()),
+--(2, 'Berlin', TRUE, NOW(), NOW()),
+--(2, 'Madrid', FALSE, NOW(), NOW()),
+--(2, 'Lisbon', FALSE, NOW(), NOW()),
+--(3, 'JavaScript', TRUE, NOW(), NOW()),
+--(3, 'C++', FALSE, NOW(), NOW()),
+--(3, 'Python', FALSE, NOW(), NOW()),
+--(4, 'Java', TRUE, NOW(), NOW()),
+--(4, 'C#', FALSE, NOW(), NOW()),
+--(4, 'Swift', FALSE, NOW(), NOW());
 
 -- Inserting sample quiz_attempts
 -- Note: Normally, the score, total_questions, and correct_answers would be determined after a quiz is taken.

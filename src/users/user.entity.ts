@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Quiz } from 'src/quizes/quiz.entity';
+import { Quiz } from 'src/quizzes/quizzes.entity';
 import { QuizAttempt } from 'src/quiz-attempts/quiz-attempt.entity';
 
 @Entity()
-export class User {
+export class Users {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,15 +16,9 @@ export class User {
   @Column({ type: 'varchar', length: 20 })
   role: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  //@OneToMany(() => Quiz, quiz => quiz.author)
+  //quizzes: Quiz[];
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @OneToMany(() => Quiz, quiz => quiz.author)
-  quizzes: Quiz[];
-
-  @OneToMany(() => QuizAttempt, quizAttempt => quizAttempt.user)
-  quizAttempts: QuizAttempt[];
+  //@OneToMany(() => QuizAttempt, quizAttempt => quizAttempt.user)
+  //quizAttempts: QuizAttempt[];
 }
