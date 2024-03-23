@@ -8,8 +8,8 @@ export class QuizAttempt {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Quiz, quiz => quiz.quizAttempts)
-  quiz: Quiz;
+  //@ManyToOne(() => Quiz, quiz => quiz.quizAttempts)
+  //quiz: Quiz;
 
   //@ManyToOne(() => User, user => user.quizAttempts)
   //user: User;

@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type Users {
   id: Int!
   name: String!
   email: String!
@@ -15,12 +15,12 @@ enum UserRole {
 }
 
 type Query {
-  getUsers: [User!]!
-  getUserById(id: Int!): User
+  getUsers: [Users!]!
+  getUserById(id: Int!): Users
 }
 
 type Mutation {
-  createUser(createUserData: CreateUserInput!): User!
+  createUser(createUserData: CreateUserInput!): Users!
 }
 
 input CreateUserInput {

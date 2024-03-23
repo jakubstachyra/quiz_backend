@@ -2,8 +2,7 @@ import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserInput } from "src/graphql/utils/createUserInput";
 import { Users } from "./user.entity";
-import { DataSource, Repository, Transaction } from "typeorm";
-import { query } from "express";
+import { DataSource, Repository} from "typeorm";
 
 
 @Injectable()
@@ -19,7 +18,6 @@ export class UserService{
         return this.usersRepo.findOneBy({id});
     }
 
-// userService.ts
 async createUser(createUserData: CreateUserInput): Promise<Users> {
     const queryRunner = this.dataSource.createQueryRunner();
 
@@ -27,12 +25,12 @@ async createUser(createUserData: CreateUserInput): Promise<Users> {
     await queryRunner.startTransaction();
     
     try {
-        // Tworzenie nowego użytkownika z danymi wejściowymi
+        
         const newUser = queryRunner.manager.create(Users, createUserData);
-        // Zapisanie nowego użytkownika
+        
         const savedUser = await queryRunner.manager.save(newUser);
         await queryRunner.commitTransaction();
-        return savedUser; // Zwraca zapisanego użytkownika
+        return savedUser; 
     } catch (error) {
         await queryRunner.rollbackTransaction();
         console.error("Transaction failed:", error);

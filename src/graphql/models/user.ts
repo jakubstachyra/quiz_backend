@@ -10,17 +10,17 @@ registerEnumType(UserRole, {
 });
 
 @ObjectType()
-export class User {
+export class Users {
   @Field(() => Int)
   id: number;
 
   @Field()
-  name?: string;
+  name: string;
 
   @Field()
-  email?: string;
+  email: string;
 
   @Field(() => UserRole)
-  role?: string;
+  role: string;
 }
 

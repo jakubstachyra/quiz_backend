@@ -8,18 +8,15 @@ export class Question {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Quiz, quiz => quiz.questions)
-  quiz: Quiz;
+  @Column()
+  type: string;
 
   @Column()
   text: string;
 
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
-
+  @ManyToOne(() => Quiz, quiz => quiz.questions)
+  quiz: Quiz;
+  
   @OneToMany(() => Option, option => option.question)
   options: Option[];
 }
