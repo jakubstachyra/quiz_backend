@@ -6,7 +6,12 @@ type User {
   id: Int!
   name: String!
   email: String!
-  role: String!
+  role: UserRole!
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
 }
 
 type Query {

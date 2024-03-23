@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {Question} from './questions/question.entity';
 import {Option} from './options/option.entity';
-import {Quiz} from './quizzes/quizzes.entity';
+import {Quiz} from './quizzes/quiz.entity';
 import {Users} from'./users/user.entity';
 import { UserAnswer } from './user-answers/user-answer.entity';
 import { QuizAttempt } from './quiz-attempts/quiz-attempt.entity';

@@ -5,13 +5,14 @@ export class Quiz {
   @Field(() => Int)
   id: number;
 
-  @Field()
-  name?: string;
+  @Field({nullable: false})
+  title: string;
 
   @Field()
-  email?: string;
+  authorID: string;
 
   @Field()
   role?: string;
+
 }
 

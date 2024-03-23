@@ -11,8 +11,8 @@ export class Quiz {
   @Column()
   title: string;
 
- // @ManyToOne(() => User, user => user.quizzes)
-  //author: User;
+  @ManyToOne(() => Users, user => user.quizzes)
+  author: Users;
 
   @CreateDateColumn()
   created_at: Date;
