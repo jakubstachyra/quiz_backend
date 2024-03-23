@@ -1,6 +1,6 @@
 // question.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Quiz } from 'src/quizes/quiz.entity';
+import { Quiz } from 'src/quizzes/quizzes.entity';
 import { Option } from 'src/options/option.entity';
 
 @Entity()
