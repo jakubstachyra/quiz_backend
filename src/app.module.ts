@@ -19,7 +19,7 @@ import { QuizModule } from './quizzes/quiz.module';
       autoSchemaFile: 'src/schema.gql',
     }),
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: true, 
     }),
 TypeOrmModule.forRootAsync({
   imports: [ConfigModule],
