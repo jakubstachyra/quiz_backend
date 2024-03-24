@@ -1,7 +1,7 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Query, Args, Int } from '@nestjs/graphql';
 import { CreateQuizInput } from '../utils/createQuiz.input';
 import { QuizService } from '../../quizzes/quiz.service';
-import { Inject } from '@nestjs/common';
+import { Inject} from '@nestjs/common';
 import { Quiz } from '../models/quiz.model';
 
 
@@ -12,5 +12,10 @@ export class QuizResolver {
     @Mutation(returns => Quiz)
     createQuiz(@Args('createQuizData') createQuizData: CreateQuizInput) {
         return this.quizService.createQuiz(createQuizData);
+    }
+    @Query(returns => Quiz)
+    async getQuizById(@Args('id',{type: () => Int})id: number): Promise<Quiz>
+    {
+        return this.quizService.getQuizByID(id);
     }
 }
