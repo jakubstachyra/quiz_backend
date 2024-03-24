@@ -82,7 +82,7 @@ export class QuizService {
         {
             throw new NotFoundException('Quiz with ID ${id} not found');
         }
-        // Blocking access to answers
+        // Blocking access to correct answers
         quiz.questions.forEach(question => {
             delete question.expectedAnswer;
             question.options.forEach(option => {
