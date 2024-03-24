@@ -13,6 +13,7 @@ import { QuizAttempt } from './quiz-attempts/quiz-attempt.entity';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserResolver } from './graphql/resolvers/userResolver';
 import { UsersModule } from './users/users.module';
+import { QuizModule } from './quizzes/quiz.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ TypeOrmModule.forRootAsync({
   inject: [ConfigService],  
   }),
   UsersModule,
+  QuizModule,
 ],
   controllers: [AppController],
   providers: [AppService],

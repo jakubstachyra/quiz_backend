@@ -11,6 +11,9 @@ export class Quiz {
   @Column()
   title: string;
 
+  @Column()
+  authorId: number;
+
   @ManyToOne(() => Users, user => user.quizzes)
   author: Users;
 

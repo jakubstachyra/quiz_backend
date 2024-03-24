@@ -14,9 +14,12 @@ export class Question {
   @Column()
   text: string;
 
+  @Column({nullable: true})
+  expectedAnswer?: string;
+
   @ManyToOne(() => Quiz, quiz => quiz.questions)
   quiz: Quiz;
-  
+
   @OneToMany(() => Option, option => option.question)
-  options: Option[];
+  options?: Option[];
 }

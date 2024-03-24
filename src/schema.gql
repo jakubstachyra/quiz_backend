@@ -14,6 +14,36 @@ enum UserRole {
   TEACHER
 }
 
+type Option {
+  id: Int!
+  expectedOrder: Int
+  text: String!
+  isCorrect: Boolean!
+}
+
+type Question {
+  id: Int!
+  text: String!
+  type: QuestionType!
+  options: [Option!]
+  expectedAnswer: String
+}
+
+enum QuestionType {
+  OPEN
+  CHOICE
+  MULTIPLE_CHOICE
+  SORTING
+}
+
+type Quiz {
+  id: Int!
+  title: String!
+  questions: [Question!]!
+  authorId: Int!
+  author: Users!
+}
+
 type Query {
   getUsers: [Users!]!
   getUserById(id: Int!): Users
@@ -21,10 +51,31 @@ type Query {
 
 type Mutation {
   createUser(createUserData: CreateUserInput!): Users!
+  createQuiz(createQuizData: CreateQuizInput!): Quiz!
 }
 
 input CreateUserInput {
   name: String!
   email: String!
   role: String!
+}
+
+input CreateQuizInput {
+  title: String!
+  authorId: Int!
+  questions: [CreateQuestionInput!]!
+}
+
+input CreateQuestionInput {
+  text: String!
+  type: QuestionType!
+  options: [CreateOptionInput!]
+  expectedAnswer: String
+  sequence: Float
+}
+
+input CreateOptionInput {
+  text: String!
+  expectedOrder: Int
+  isCorrect: Boolean!
 }

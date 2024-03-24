@@ -1,10 +1,12 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateOptionInput {
     @Field()
     text: string;
 
+    @Field(() => Int,{nullable: true})
+    expectedOrder: number
     @Field()
     isCorrect: boolean;
 }

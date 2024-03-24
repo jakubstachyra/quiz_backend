@@ -1,10 +1,11 @@
 import { Field, ObjectType, Int, registerEnumType  } from '@nestjs/graphql';
-import {Option} from "src/options/option.entity";
+import {Option} from './option.model';
 
 export enum QuestionType {
     OPEN = 'open',
     CHOICE = 'choice',
-    MULTIPLE_CHOICE = 'multiple_choice'
+    MULTIPLE_CHOICE = 'multiple_choice',
+    SORTING = 'sorting'
   }
   
 registerEnumType(QuestionType, {

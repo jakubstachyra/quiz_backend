@@ -6,9 +6,12 @@ export class Option{
     @Field(() => Int)
     id: number;
 
+    @Field(()=> Int,{nullable:true})
+    expectedOrder: number;
+
     @Field()
     text: string;
     
     @Field()
-    is_correct: boolean;
+    isCorrect: boolean;
 }

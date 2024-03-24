@@ -1,13 +1,14 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { Quiz } from 'src/quizzes/quiz.entity';
 import { CreateQuizInput } from '../utils/createQuiz.input';
 import { QuizService } from 'src/quizzes/quiz.service';
+import { Inject } from '@nestjs/common';
+import { Quiz } from '../models/quiz.model';
 
 
-@Resolver(of => Quiz)
+@Resolver()
 export class QuizResolver {
-    constructor(private readonly quizService: QuizService) {}
-
+    constructor(@Inject(QuizService) private quizService: QuizService) {}
+    
     @Mutation(returns => Quiz)
     createQuiz(@Args('createQuizData') createQuizData: CreateQuizInput) {
         return this.quizService.createQuiz(createQuizData);
