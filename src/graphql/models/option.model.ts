@@ -7,7 +7,7 @@ export class Option{
     id: number;
 
     @Field(()=> Int,{nullable:true})
-    expectedOrder: number;
+    expectedOrder?: number;
 
     @Field()
     text: string;
