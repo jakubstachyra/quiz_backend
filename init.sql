@@ -1,56 +1,54 @@
--- Creating table users
-CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    role VARCHAR(20) CHECK (role IN ('teacher', 'student'))
-);
+    -- Creating table users
+    CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        role VARCHAR(20) CHECK (role IN ('teacher', 'student'))
+    );
 
--- Creating table quizzes
-CREATE TABLE IF NOT EXISTS quizzes (
-    id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    author_id INTEGER,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    FOREIGN KEY (author_id) REFERENCES users (id)
-);
+    -- Creating table quizzes
+    CREATE TABLE IF NOT EXISTS quizzes (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        author_id INTEGER,
+        FOREIGN KEY (author_id) REFERENCES users (id)
+    );
 
--- Creating table questions with an additional field for open-ended questions
-CREATE TABLE IF NOT EXISTS questions (
-    id SERIAL PRIMARY KEY,
-    quiz_id INTEGER,
-    text TEXT NOT NULL,
-    type VARCHAR(50) CHECK (type IN ('open', 'choice', 'multiple_choice')),
-    expected_answer TEXT, -- This field can store the expected answer for open-ended questions
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    FOREIGN KEY (quiz_id) REFERENCES quizzes (id)
-);
+    -- Creating table questions with an additional field for open-ended questions
+    CREATE TABLE IF NOT EXISTS questions (
+        id SERIAL PRIMARY KEY,
+        quiz_id INTEGER,
+        text TEXT NOT NULL,
+        type VARCHAR(50) CHECK (type IN ('open', 'choice', 'multiple_choice')),
+        expected_answer TEXT, -- This field can store the expected answer for open-ended questions
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
+        updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
+        FOREIGN KEY (quiz_id) REFERENCES quizzes (id)
+    );
 
--- Creating table options
-CREATE TABLE IF NOT EXISTS options (
-    id SERIAL PRIMARY KEY,
-    question_id INTEGER NOT NULL,
-    text TEXT NOT NULL,
-    is_correct BOOLEAN,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    FOREIGN KEY (question_id) REFERENCES questions (id)
-);
+    -- Creating table options
+    CREATE TABLE IF NOT EXISTS options (
+        id SERIAL PRIMARY KEY,
+        question_id INTEGER NOT NULL,
+        text TEXT NOT NULL,
+        is_correct BOOLEAN,
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
+        updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
+        FOREIGN KEY (question_id) REFERENCES questions (id)
+    );
 
--- Creating table quiz_attempts
-CREATE TABLE IF NOT EXISTS quiz_attempts (
-    id SERIAL PRIMARY KEY,
-    quiz_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    score INTEGER,
-    total_questions INTEGER,
-    correct_answers INTEGER,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
-    FOREIGN KEY (quiz_id) REFERENCES quizzes (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
-);
+    -- Creating table quiz_attempts
+    CREATE TABLE IF NOT EXISTS quiz_attempts (
+        id SERIAL PRIMARY KEY,
+        quiz_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        score INTEGER,
+        total_questions INTEGER,
+        correct_answers INTEGER,
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
+        FOREIGN KEY (quiz_id) REFERENCES quizzes (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    );
 
 -- Creating table answers (to store the answers given by the users)
 CREATE TABLE IF NOT EXISTS user_answers (
