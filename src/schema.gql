@@ -18,7 +18,7 @@ type Option {
   id: Int!
   expectedOrder: Int
   text: String!
-  isCorrect: Boolean!
+  isCorrect: Boolean
 }
 
 type Question {
@@ -47,6 +47,7 @@ type Quiz {
 type Query {
   getUsers: [Users!]!
   getUserById(id: Int!): Users
+  getQuizById(id: Int!): Quiz!
 }
 
 type Mutation {
@@ -71,11 +72,10 @@ input CreateQuestionInput {
   type: QuestionType!
   options: [CreateOptionInput!]
   expectedAnswer: String
-  sequence: Float
 }
 
 input CreateOptionInput {
   text: String!
   expectedOrder: Int
-  isCorrect: Boolean!
+  isCorrect: Boolean
 }

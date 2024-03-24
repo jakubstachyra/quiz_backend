@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { Quiz } from './quiz.entity';
 import { CreateQuizInput } from '../graphql/utils/createQuiz.input';
 import { Question } from '../questions/question.entity';
 import { Option } from '../options/option.entity';
+import { query } from 'express';
 
 @Injectable()
 export class QuizService {
@@ -35,23 +36,23 @@ export class QuizService {
 
                 if (Array.isArray(questionData.options)) {
                     for (const optionData of questionData.options) {
-
-                    if (questionData.type === 'sorting') {
-                        const option = new Option();
-                        option.text = optionData.text;
-                        option.isCorrect = optionData.isCorrect;
-                        option.expectedOrder = optionData.expectedOrder;
                         
-                        const savedOption = await queryRunner.manager.save(option);
-                        question.options.push(savedOption);
-                    }
-                else{
-                        const option = new Option();
-                        option.text = optionData.text;
-                        option.isCorrect = optionData.isCorrect;
-                        const savedOption = await queryRunner.manager.save(option);
-                        question.options.push(savedOption);
-                    }
+                        if (questionData.type === 'sorting') {
+                            const option = new Option();
+                            option.text = optionData.text;
+                            option.expectedOrder = optionData.expectedOrder;
+                            option.isCorrect = false; // 
+                            const savedOption = await queryRunner.manager.save(option);
+                            question.options.push(savedOption);
+                        }
+                        else {
+                            const option = new Option();
+                            option.text = optionData.text;
+                            option.isCorrect = optionData.isCorrect !== undefined ? optionData.isCorrect : false; //Default false
+                            const savedOption = await queryRunner.manager.save(option);
+                            question.options.push(savedOption);
+                        }
+                        
                 }
             }
                 
@@ -69,5 +70,27 @@ export class QuizService {
         } finally {
             await queryRunner.release();
         }
+    }
+
+    async getQuizByID(id: number): Promise<Quiz>
+    {
+        const quiz = await this.quizRepository.findOne({
+            where: {id},
+            relations: ['questions', 'questions.options'],
+        });
+        if(!quiz)
+        {
+            throw new NotFoundException('Quiz with ID ${id} not found');
+        }
+        // Blocking access to answers
+        quiz.questions.forEach(question => {
+            delete question.expectedAnswer;
+            question.options.forEach(option => {
+                delete option.isCorrect;
+                delete option.expectedOrder;
+            });
+        });
+
+        return quiz;
     }
 }
