@@ -6,7 +6,7 @@ export class CreateOptionInput {
     text: string;
 
     @Field(() => Int,{nullable: true})
-    expectedOrder: number
-    @Field()
-    isCorrect: boolean;
+    expectedOrder?: number
+    @Field({nullable: true})
+    isCorrect?: boolean;
 }
