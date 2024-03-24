@@ -97,7 +97,9 @@ describe('QuizService', () => {
         result.questions.forEach((question, index) => {
             const inputQuestion = createQuizInput.questions[index];
             expect(question.options).toHaveLength(inputQuestion.options.length);
-
+            if ('expectedAnswer' in inputQuestion) {
+                expect(question.expectedAnswer).toEqual(inputQuestion.expectedAnswer);
+            }
             question.options.forEach((option, optionIndex) => {
                 const inputOption = inputQuestion.options[optionIndex];
                 expect(option.text).toEqual(inputOption.text);
