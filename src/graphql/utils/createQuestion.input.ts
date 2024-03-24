@@ -1,6 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { CreateOptionInput } from './createOption.input';
-import { QuestionType } from 'src/graphql/models/question.model';
+import { QuestionType } from '../models/question.model';
 
 @InputType()
 export class CreateQuestionInput {
@@ -15,7 +15,4 @@ export class CreateQuestionInput {
 
     @Field({ nullable: true })
     expectedAnswer?: string;
-
-    @Field({nullable:true})
-    sequence: number;
 }

@@ -12,6 +12,6 @@ export class Option{
     @Field()
     text: string;
     
-    @Field()
-    isCorrect: boolean;
+    @Field({nullable: true})
+    isCorrect?: boolean;
 }
