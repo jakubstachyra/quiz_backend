@@ -15,7 +15,4 @@ export class CreateQuestionInput {
 
     @Field({ nullable: true })
     expectedAnswer?: string;
-
-    @Field({nullable:true})
-    sequence: number;
 }

@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { Quiz } from './quiz.entity';
-import { CreateQuizInput } from 'src/graphql/utils/createQuiz.input';
-import { Question } from 'src/questions/question.entity';
-import { Option } from 'src/options/option.entity';
+import { CreateQuizInput } from '../graphql/utils/createQuiz.input';
+import { Question } from '../questions/question.entity';
+import { Option } from '../options/option.entity';
 
 @Injectable()
 export class QuizService {
@@ -23,7 +23,7 @@ export class QuizService {
             const quiz = new Quiz();
             quiz.title = createQuizData.title;
             quiz.authorId = createQuizData.authorId;
-            const questions = []; // Utwórz tymczasową tablicę dla pytań
+            const questions = []; 
 
             for (const questionData of createQuizData.questions) {
                 const question = new Question();
@@ -31,22 +31,20 @@ export class QuizService {
                 question.type = questionData.type;
                 question.expectedAnswer = questionData.expectedAnswer;
                 
-                question.options = []; // Utwórz tymczasową tablicę dla opcji
+                question.options = []; 
 
-                // Upewnij się, że questionData.options jest tablicą przed iteracją
                 if (Array.isArray(questionData.options)) {
                     for (const optionData of questionData.options) {
-                        // Wewnątrz metody createQuiz lub podobnej
 
-                if (questionData.type === 'sorting') {
-                    const option = new Option();
-                    option.text = optionData.text;
-                    option.isCorrect = optionData.isCorrect;
-                    option.expectedOrder = optionData.expectedOrder;
-                      
-                    const savedOption = await queryRunner.manager.save(option);
-                    question.options.push(savedOption);
-                }
+                    if (questionData.type === 'sorting') {
+                        const option = new Option();
+                        option.text = optionData.text;
+                        option.isCorrect = optionData.isCorrect;
+                        option.expectedOrder = optionData.expectedOrder;
+                        
+                        const savedOption = await queryRunner.manager.save(option);
+                        question.options.push(savedOption);
+                    }
                 else{
                         const option = new Option();
                         option.text = optionData.text;
@@ -57,13 +55,12 @@ export class QuizService {
                 }
             }
                 
-                // Zapisz pytanie (opcje powinny być zapisane kaskadowo jeśli są poprawnie skonfigurowane)
                 const savedQuestion = await queryRunner.manager.save(question);
-                questions.push(savedQuestion); // Dodaj zapisane pytanie do listy pytań quizu
+                questions.push(savedQuestion); 
             }
 
-            quiz.questions = questions; // Przypisz pytania do quizu
-            const newQuiz = await queryRunner.manager.save(quiz); // Zapisz cały quiz
+            quiz.questions = questions;
+            const newQuiz = await queryRunner.manager.save(quiz);
             await queryRunner.commitTransaction();
             return newQuiz;
         } catch (error) {

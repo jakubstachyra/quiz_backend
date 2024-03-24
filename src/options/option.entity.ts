@@ -1,6 +1,5 @@
-// option.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Question } from 'src/questions/question.entity';
+import { Question } from '../questions/question.entity';
 import { Int } from '@nestjs/graphql';
 
 @Entity()
