@@ -1,6 +1,7 @@
 // option.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Question } from 'src/questions/question.entity';
+import { Int } from '@nestjs/graphql';
 
 @Entity()
 export class Option {
@@ -13,6 +14,9 @@ export class Option {
   @Column()
   text: string;
 
+  @Column({nullable: true})
+  expectedOrder?: number;
+
   @Column()
-  is_correct: boolean;
+  isCorrect: boolean;
 }

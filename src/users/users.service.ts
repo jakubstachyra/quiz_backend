@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CreateUserInput } from "src/graphql/utils/createUserInput";
+import { CreateUserInput } from "src/graphql/utils/createUser.input";
 import { Users } from "./user.entity";
 import { DataSource, Repository} from "typeorm";
 
@@ -35,8 +35,7 @@ async createUser(createUserData: CreateUserInput): Promise<Users> {
         await queryRunner.rollbackTransaction();
         console.error("Transaction failed:", error);
         throw new InternalServerErrorException("Failed to create user");
-    }
-    finally{
+    }finally{
         await queryRunner.release();
     }
 }

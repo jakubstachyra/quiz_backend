@@ -1,12 +1,17 @@
-import { Field, ObjectType, Int } from '@nestjs/graphql';
-import {Option} from "src/options/option.entity";
+import { Field, ObjectType, Int, registerEnumType  } from '@nestjs/graphql';
+import {Option} from './option.model';
 
-enum QuestionType {
+export enum QuestionType {
     OPEN = 'open',
     CHOICE = 'choice',
-    MULTIPLE_CHOICE = 'multiple_choice'
+    MULTIPLE_CHOICE = 'multiple_choice',
+    SORTING = 'sorting'
   }
   
+registerEnumType(QuestionType, {
+  name: 'QuestionType',
+});
+
 @ObjectType()
 export class Question {
     @Field(() => Int)

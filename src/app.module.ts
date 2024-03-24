@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -11,8 +9,8 @@ import {Users} from'./users/user.entity';
 import { UserAnswer } from './user-answers/user-answer.entity';
 import { QuizAttempt } from './quiz-attempts/quiz-attempt.entity';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UserResolver } from './graphql/resolvers/userResolver';
 import { UsersModule } from './users/users.module';
+import { QuizModule } from './quizzes/quiz.module';
 
 @Module({
   imports: [
@@ -21,7 +19,7 @@ import { UsersModule } from './users/users.module';
       autoSchemaFile: 'src/schema.gql',
     }),
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: true, 
     }),
 TypeOrmModule.forRootAsync({
   imports: [ConfigModule],
@@ -38,8 +36,7 @@ TypeOrmModule.forRootAsync({
   inject: [ConfigService],  
   }),
   UsersModule,
+  QuizModule,
 ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

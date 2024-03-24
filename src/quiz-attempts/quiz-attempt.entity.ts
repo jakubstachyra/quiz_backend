@@ -20,12 +20,6 @@ export class QuizAttempt {
   @Column()
   total_questions: number;
 
-  @Column()
-  correct_answers: number;
-
-  @CreateDateColumn()
-  created_at: Date;
-
   @OneToMany(() => UserAnswer, userAnswer => userAnswer.quizAttempt)
   userAnswers: UserAnswer[];
 }
