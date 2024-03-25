@@ -12,5 +12,4 @@ export class CreateUserInput{
     @Field({ nullable: false })
     role: string;
 
-
 }
