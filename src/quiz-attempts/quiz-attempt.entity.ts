@@ -1,21 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
-import { Quiz } from 'src/quizzes/quiz.entity';
-import { Users } from 'src/users/user.entity';
-import { UserAnswer } from 'src/user-answers/user-answer.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany} from 'typeorm';
+import { Quiz } from '../quizzes/quiz.entity';
+import { Users } from '../users/user.entity';
+import { UserAnswer } from '../user-answers/user-answer.entity';
 
 @Entity()
 export class QuizAttempt {
   @PrimaryGeneratedColumn()
   id: number;
 
-  //@ManyToOne(() => Quiz, quiz => quiz.quizAttempts)
-  //quiz: Quiz;
+  @ManyToOne(() => Quiz, quiz => quiz.attempts)
+  quiz: Quiz;
 
-  //@ManyToOne(() => User, user => user.quizAttempts)
-  //user: User;
+  @ManyToOne(() => Users, user => user.attempts)
+  user: Users;
 
   @Column()
   score: number;
+
+  @Column()
+  maxScore: number;
 
   @Column()
   total_questions: number;

@@ -1,14 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Quiz } from '../quizzes/quiz.entity';
 import { Option } from '../options/option.entity';
+import { QuestionType } from 'src/graphql/models/question.model';
 
 @Entity()
 export class Question {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  type: string;
+  @Column({
+    type: 'enum',
+    enum: QuestionType,
+  })
+  type:QuestionType;
 
   @Column()
   text: string;
