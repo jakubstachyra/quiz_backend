@@ -2,18 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Users {
-  id: Int!
-  name: String!
-  email: String!
-  role: UserRole!
-}
-
-enum UserRole {
-  STUDENT
-  TEACHER
-}
-
 type Option {
   id: Int!
   expectedOrder: Int
@@ -21,11 +9,22 @@ type Option {
   isCorrect: Boolean
 }
 
+type UserAnswer {
+  id: Int!
+  question: Question!
+  chosenOption: Option
+  textAnswer: String
+  quizAttempt: QuizAttempt!
+  chosenOrder: Int
+}
+
 type Question {
   id: Int!
   text: String!
   type: QuestionType!
   options: [Option!]
+  userAnswers: [UserAnswer!]
+  attempts: [QuizAttempt!]
   expectedAnswer: String
 }
 
@@ -42,6 +41,30 @@ type Quiz {
   questions: [Question!]!
   authorId: Int!
   author: Users!
+  attempts: [QuizAttempt!]!
+}
+
+type QuizAttempt {
+  id: Int!
+  quiz: Quiz!
+  user: Users!
+  userAnswers: [UserAnswer!]!
+  score: Float!
+  maxScore: Float!
+}
+
+type Users {
+  id: Int!
+  name: String!
+  email: String!
+  role: UserRole!
+  quizzes: [Quiz!]
+  attempts: [QuizAttempt!]
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
 }
 
 type Query {
@@ -53,6 +76,8 @@ type Query {
 type Mutation {
   createUser(createUserData: CreateUserInput!): Users!
   createQuiz(createQuizData: CreateQuizInput!): Quiz!
+  startQuizById(quizId: Int!, userId: Int!): Int!
+  submitAnswers(attemptId: Int!, answers: [AnswerInput!]!): QuizAttempt!
 }
 
 input CreateUserInput {
@@ -78,4 +103,12 @@ input CreateOptionInput {
   text: String!
   expectedOrder: Int
   isCorrect: Boolean
+}
+
+input AnswerInput {
+  questionId: Int!
+  chosenOptionIds: [Int!]
+  chosenOptionId: Int
+  textAnswer: String
+  chosenOrder: [Int!]
 }
