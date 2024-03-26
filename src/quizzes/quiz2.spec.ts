@@ -6,6 +6,10 @@ import { Question } from '../questions/question.entity';
 import { Option } from '../options/option.entity';
 import { NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { QuizAttempt } from '../quiz-attempts/quiz-attempt.entity';
+import { UserAnswer } from '../user-answers/user-answer.entity';
+import { UserService } from '../users/users.service';
+import { Users } from '../users/user.entity';
 
 describe('QuizService', () => {
     let service: QuizService;
@@ -38,6 +42,7 @@ describe('QuizService', () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 QuizService,
+                UserService,
                 {
                     provide: getRepositoryToken(Quiz),
                     useValue: mockQuizRepository
@@ -48,6 +53,18 @@ describe('QuizService', () => {
                 },
                 {
                     provide: getRepositoryToken(Option),
+                    useValue: {}
+                },
+                {
+                    provide: getRepositoryToken(QuizAttempt),
+                    useValue: {}
+                },
+                {
+                    provide: getRepositoryToken(UserAnswer),
+                    useValue: {}
+                },
+                {
+                    provide: getRepositoryToken(Users),
                     useValue: {}
                 },
                 {
