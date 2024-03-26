@@ -16,29 +16,28 @@ describe('QuizService', () => {
     let mockQuizAttemptRepository: any;
     let mockOptionRepository: any;
     let mockDataSource: any;
+    let mockQuizRepository: any;
 
+    beforeEach(async () => {
+        mockQuizRepository = {
+            id: 1,
+            questions: [
+                { id: 5, type: QuestionType.CHOICE, options: [{ id: 12, isCorrect: true }] },
+                { id: 6, type: QuestionType.OPEN, expectedAnswer: 'May the force be with you', options: [] },
+                { id: 7, type: QuestionType.MULTIPLE_CHOICE, options: [
+                    { id: 15, isCorrect: true },
+                    { id: 17, isCorrect: true },
+                    { id: 18, isCorrect: false }
+                ]},
+            ],
+        };});
     beforeEach(async () => {
         mockQuizAttemptRepository = {
             findOne: jest.fn().mockImplementation(({ where: { id } }) => {
                 if (id === 1) {
                     return Promise.resolve({
                         id: 1,
-                        quiz: {
-                            id: 1,
-                            questions: [
-                                { id: 5, type: QuestionType.CHOICE, options: [{ id: 12, isCorrect: true }] },
-                                { id: 6, type: QuestionType.OPEN, expectedAnswer: 'May the force be with you', options: [] },
-                                { id: 7, type: QuestionType.MULTIPLE_CHOICE, options: [
-                                    { id: 15, isCorrect: true },
-                                    { id: 17, isCorrect: true },
-                                    { id: 18, isCorrect: false }
-                                ]},
-                                { id: 8, type: QuestionType.SORTING, options: [
-                                    { id: 19, expectedOrder: 1 },
-                                    { id: 20, expectedOrder: 2 }
-                                ]}
-                            ],
-                        },
+                        quiz: mockQuizRepository,
                         user: { id: 1 },
                         userAnswers: []
                     });
@@ -86,7 +85,7 @@ describe('QuizService', () => {
                 },
                 {
                     provide: getRepositoryToken(Quiz),
-                    useValue: mockOptionRepository
+                    useValue: mockQuizRepository
                 },
                 {
                     provide: getRepositoryToken(Users),

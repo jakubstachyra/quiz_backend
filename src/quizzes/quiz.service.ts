@@ -172,7 +172,7 @@ export class QuizService {
     
             attempt.userAnswers.push(userAnswer);
         }
-    
+
         attempt.score = score;
         attempt.total_questions = questions.length;
     
