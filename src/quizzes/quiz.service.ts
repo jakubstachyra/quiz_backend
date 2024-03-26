@@ -9,19 +9,15 @@ import { QuizAttempt } from '../quiz-attempts/quiz-attempt.entity';
 import { AnswerInput } from '../graphql/utils/answer.input';
 import { UserAnswer } from '../user-answers/user-answer.entity';
 import { UserService } from '../users/users.service';
-import { QuestionType } from 'src/graphql/models/question.model';
+import { QuestionType } from '../graphql/models/question.model';
 @Injectable()
 export class QuizService {
     constructor(
         @InjectRepository(Quiz) private readonly quizRepository: Repository<Quiz>,
         private dataSource: DataSource,@InjectRepository(QuizAttempt)
         private quizAttemptRepository: Repository<QuizAttempt>,
-        @InjectRepository(Question)
-        private questionRepository: Repository<Question>,
         @InjectRepository(Option)
         private optionRepository: Repository<Option>,
-        @InjectRepository(UserAnswer)
-        private readonly userAnswerRepository: Repository<UserAnswer>,
         private readonly userService: UserService
     ) {}
     async createQuiz(createQuizData: CreateQuizInput): Promise<Quiz> {
@@ -51,14 +47,14 @@ export class QuizService {
                             const option = new Option();
                             option.text = optionData.text;
                             option.expectedOrder = optionData.expectedOrder;
-                            option.isCorrect = false; // 
+                            option.isCorrect = false; 
                             const savedOption = await queryRunner.manager.save(option);
                             question.options.push(savedOption);
                         }
                         else {
                             const option = new Option();
                             option.text = optionData.text;
-                            option.isCorrect = optionData.isCorrect !== undefined ? optionData.isCorrect : false; //Default false
+                            option.isCorrect = optionData.isCorrect !== undefined ? optionData.isCorrect : false; 
                             const savedOption = await queryRunner.manager.save(option);
                             question.options.push(savedOption);
                         }
@@ -176,7 +172,7 @@ export class QuizService {
     
             attempt.userAnswers.push(userAnswer);
         }
-    
+
         attempt.score = score;
         attempt.total_questions = questions.length;
     
@@ -186,8 +182,6 @@ export class QuizService {
         return attempt;
     }
     
-    
-
     
     async startQuizById(quizId: number, userId: number): Promise<number> {
         const queryRunner = this.dataSource.createQueryRunner();
@@ -206,7 +200,7 @@ export class QuizService {
         const user = await this.userService.getUserById(userId);
         
         if (!user) {
-            throw new NotFoundException(`User with ID ${userId} not found.`);
+        throw new NotFoundException(`User with ID ${userId} not found.`);
         }
     
         const newAttempt = new QuizAttempt();
@@ -223,7 +217,8 @@ export class QuizService {
         return newAttempt.id;
     }catch (err) {
         await queryRunner.rollbackTransaction();
-        throw new InternalServerErrorException('Failed to start quiz attempt');
+        console.log(err);
+        throw new InternalServerErrorException('Failed to start quiz attempt ');
     } finally {
         await queryRunner.release();
     }
