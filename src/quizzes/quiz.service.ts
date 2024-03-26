@@ -200,7 +200,7 @@ export class QuizService {
         const user = await this.userService.getUserById(userId);
         
         if (!user) {
-            throw new NotFoundException(`User with ID ${userId} not found.`);
+        throw new NotFoundException(`User with ID ${userId} not found.`);
         }
     
         const newAttempt = new QuizAttempt();
@@ -217,7 +217,8 @@ export class QuizService {
         return newAttempt.id;
     }catch (err) {
         await queryRunner.rollbackTransaction();
-        throw new InternalServerErrorException('Failed to start quiz attempt');
+        console.log(err);
+        throw new InternalServerErrorException('Failed to start quiz attempt ');
     } finally {
         await queryRunner.release();
     }
