@@ -6,6 +6,10 @@ import { Question } from '../questions/question.entity';
 import { Option } from '../options/option.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import {QuestionType} from '../graphql/models/question.model';
+import { QuizAttempt } from '../quiz-attempts/quiz-attempt.entity';
+import { UserAnswer } from '../user-answers/user-answer.entity';
+import { UserService } from '../users/users.service';
+import { Users } from '../users/user.entity';
 
 describe('QuizService', () => {
     let service: QuizService;
@@ -15,6 +19,7 @@ describe('QuizService', () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 QuizService,
+                UserService,
                 {
                     provide: getRepositoryToken(Quiz),
                     useClass: Repository
@@ -25,6 +30,18 @@ describe('QuizService', () => {
                 },
                 {
                     provide: getRepositoryToken(Option),
+                    useClass: Repository
+                },
+                {
+                    provide: getRepositoryToken(QuizAttempt),
+                    useClass: Repository
+                },
+                {
+                    provide: getRepositoryToken(UserAnswer),
+                    useClass: Repository
+                },
+                {
+                    provide: getRepositoryToken(Users),
                     useClass: Repository
                 },
                 {
